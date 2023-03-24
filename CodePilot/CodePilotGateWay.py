@@ -2,6 +2,8 @@ import json
 from flask import Flask
 import flask_unittest
 import requests
+import os
+import sys
 
 from CodePilot.ResponseParser import jsonParser
 
@@ -13,8 +15,9 @@ class CodePilotGateWay():
         self.jsonparser = jsonParser()
 
     def completion(self,request_data):
+        api_key = os.getenv('CHATGPT_API_KEY')
         headers = {"Content-Type": "application/json",
-                   "Authorization": "Bearer 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"}
+                   "Authorization": f"Bearer {api_key}"}
         
         response = requests.post("https://api.openai.com/v1/chat/completions",
                              headers = headers, 
